@@ -37,9 +37,10 @@ else :
 				return True
 			else:
 				return False
+#filtering the list			
 	listofstuds = filter(eligible, listofstuds);
+#sorting the list based on merit
+	listofstuds = list(reversed(sorted(listofstuds, key=itemgetter(3))));
 	for x in range(0, len(listofstuds)):
 		print listofstuds[x]
-
-
-	
+	print len(listofstuds)
