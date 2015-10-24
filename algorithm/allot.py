@@ -53,4 +53,15 @@ else :
 
 	print diction_progs['CS B.Tech']
 
+#alpha and beta added
+
+	alpha = 0.75
+	beta = 1.1
+	for x in range(0, len(listofprogs)):
+		a = float(listofprogs[x][2])*alpha
+		b = float(listofprogs[x][2])*beta
+		listofprogs[x].append(int(a))
+		listofprogs[x].append(int(b))
+		print listofprogs[x]
+
 
