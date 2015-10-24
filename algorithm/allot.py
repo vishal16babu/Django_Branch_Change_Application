@@ -44,3 +44,13 @@ else :
 	for x in range(0, len(listofstuds)):
 		print listofstuds[x]
 	print len(listofstuds)
+
+
+#dictionary of programs for easy access
+	diction_progs = {}
+	for x in range(0, len(listofprogs)):
+		diction_progs[listofprogs[x][0]] = listofprogs[x]
+
+	print diction_progs['CS B.Tech']
+
+
