@@ -160,7 +160,7 @@ else :
 			if float(listofstuds[x][3]) >= 9.0:
 				for y in range(0, len(listofstuds[x])-5):
 					if listofstuds[x][y+5] == "":
-						listofstuds[x][0]=''
+						#listofstuds[x][0]=''
 						break
 					print 'y '+ str(y)
 				#print diction_progs[listofstuds[x][y+5]]
@@ -169,7 +169,7 @@ else :
 						allot(listofstuds[x],y+5,final,diction_progs)
 						changes=changes+1
 						if y == 0:
-							listofstuds[x][0]=''
+							#listofstuds[x][0]=''
 							f_prev=f_prev+1
 						break;						
 
@@ -177,7 +177,7 @@ else :
  					#print listofstuds[x][3]
  					for y in range(0, len(listofstuds[x])-5):
  						if listofstuds[x][y+5] == "":
- 							listofstuds[x][0]=''
+ 							#listofstuds[x][0]=''
  							break
  						#print diction_progs[listofstuds[x][y+5]]
 #if seats are vacant or last person alloted has same cpi then allot				
@@ -188,7 +188,7 @@ else :
  									allot(listofstuds[x],y+5,final,diction_progs)
  									changes=changes+1
 									if y == 0:
-										listofstuds[x][0]=''
+										#listofstuds[x][0]=''
 										f_prev=f_prev+1
 									break;						
  	
