@@ -12,7 +12,7 @@ for row in spamReader:
     listofprogs.append(row) 
 BRANCH_CHOICES = [(str(x+1),listofprogs[x][0]) for x in range(0,len(listofprogs))]
 
-class Person(models.Model):
+class Student(models.Model):
     
     CAT_CHOICES    = ((str(1), "GE"),(str(2), "OBC"),(str(3),"SC"),(str(4),"ST"),(str(5),"PwD"),)
     roll_number    = models.IntegerField(default=150050049)
@@ -25,7 +25,7 @@ class Person(models.Model):
         return str(self.roll_number)
 
 class Preference(models.Model):
-    student = models.ForeignKey(Person)
+    student = models.ForeignKey(Student)
     branch = models.CharField(max_length=9,choices=BRANCH_CHOICES,default=str(1))
     
     #created_date = models.DateTimeField(default=timezone.now)

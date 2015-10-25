@@ -1,14 +1,14 @@
 from django.contrib import admin
-from .models import Preference,Person
+from .models import Preference,Student
 
 class PreferenceInline(admin.StackedInline):
     model = Preference
     extra = 1
-class PersonAdmin(admin.ModelAdmin):
+class StudentAdmin(admin.ModelAdmin):
 
     inlines = [PreferenceInline]   
 
 
 
-admin.site.register(Person, PersonAdmin)
+admin.site.register(Student, StudentAdmin)
 
