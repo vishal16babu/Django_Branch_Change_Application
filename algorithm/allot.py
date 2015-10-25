@@ -51,7 +51,7 @@ else :
 	for x in range(0, len(listofprogs)):
 		diction_progs[listofprogs[x][0]] = listofprogs[x]
 
-	print diction_progs
+#	print diction_progs
 
 #alpha and beta added
 
@@ -62,8 +62,9 @@ else :
 		b = float(listofprogs[x][2])*beta
 		listofprogs[x].append(int(round(a,0)))
 		listofprogs[x].append(int(round(b,0)))
-		listofprogs[x].append(0) #cpi of last alloted person
-		listofprogs[x].append(0) #highest cpi of  blocked persons
+		listofprogs[x].append(0.0) #cpi of last alloted person
+		listofprogs[x].append(0.0) #highest cpi of  blocked persons
+		listofprogs[x].append('0') #roll no of highest cpi of  blocked persons
 		#print listofprogs[x]
 #listofprogs[x][0] prog name
 #listofprogs[x][1] sanchaned strength
@@ -72,9 +73,10 @@ else :
 #listofprogs[x][4] max lim
 #listofprogs[x][5] #cpi of last alloted person
 #listofprogs[x][6] #highest cpi of  blocked persons
+#listofprogs[x][7] #roll number of highest cpi of  blocked persons
 
-	print' vbb '
-	print diction_progs
+	# print' vbb '
+	# print diction_progs
 
 #iterating based on the merit order
 	def vacant(br):
@@ -135,13 +137,12 @@ else :
  									diction_progs[listofstuds[x][y+5]][6] = 0
 								break;						
  	
-	for x in range(0, len(final)):
-		print final[x]
-		print x
-	print len(final)
+	# for x in range(0, len(final)):
+	# 	print final[x]
+	# 	print x
+	# print len(final)
 	#print list(diction_progs.values())
 
 
 	#0.75 check with current branch not original (in next iterations)
 	#dictionary of students
-	
