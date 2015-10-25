@@ -35,6 +35,6 @@ class Preference(models.Model):
         #self.published_date = timezone.now()
         #self.save()
     def __str__(self):              # __unicode__ on Python 2
-        return listofprogs[int(self.branch)][0]
+        return listofprogs[int(self.branch)-1][0]
 
     

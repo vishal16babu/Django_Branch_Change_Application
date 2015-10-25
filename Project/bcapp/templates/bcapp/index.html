@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>index.html</title>
+	<title>{{ students }}</title>
 	<style>
         body {
          
@@ -43,7 +43,11 @@
 
     <br> <br>
                         
-    <h1 style="font-size:400%" align="center"style="float:center;">Y PUSHYARAG</h1>
+    <h1 style="font-size:400%" align="center"style="float:center;">
+        {% for joke in students %}
+            {{ joke }}
+        {% endfor %}
+    </h1>
     <blockquote>
         <pre> 
             <em> IF U WANT TO SHINE LIKE A SUN, THEN FIRST BURN LIKE A SUN
