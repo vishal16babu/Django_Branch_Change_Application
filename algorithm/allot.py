@@ -60,8 +60,8 @@ else :
 	for x in range(0, len(listofprogs)):
 		a = float(listofprogs[x][2])*alpha
 		b = float(listofprogs[x][2])*beta
-		listofprogs[x].append(int(a))
-		listofprogs[x].append(int(b))
+		listofprogs[x].append(int(round(a,0)))
+		listofprogs[x].append(int(round(b,0)))
 		listofprogs[x].append(0) #cpi of last alloted person
 		listofprogs[x].append(0) #highest cpi of  blocked persons
 		#print listofprogs[x]
@@ -73,21 +73,24 @@ else :
 #listofprogs[x][5] #cpi of last alloted person
 #listofprogs[x][6] #highest cpi of  blocked persons
 
-
+	print' vbb '
+	print diction_progs
 
 #iterating based on the merit order
 	def vacant(br):
 		curr = diction_progs[br]
-		if float(curr[2])<curr[4]:
+		if int(curr[2])<curr[4]:
 			return True
 		else:
 			return False
 
-	def sufficient(pq):
+	def sufficient(pq,y1):
 		curr1 = diction_progs[pq[2]]
-		if float(curr1[2])-1.0>curr1[3]:
+		if int(curr1[2])-1>=curr1[3]:
 			return True
 		else:
+			# updating the highest cpi of  blocked persons
+			curr1 = diction_progs[pq[y1]]
 			curr1[6]=max(curr1[6],pq[3])
 			return False
 
@@ -112,27 +115,33 @@ else :
 #if seats are vacant or last person alloted has same cpi then allot				
 				if vacant(listofstuds[x][y+5]) or diction_progs[listofstuds[x][y+5]][5] == listofstuds[x][3]:
 					allot(listofstuds[x],listofstuds[x][y+5],final,diction_progs)
+					#if y == 0:
+					
 					break;						
 
  		else:
- 			if sufficient(listofstuds[x]):
  				#print listofstuds[x][3]
  				for y in range(0, len(listofstuds[x])-5):
  					if listofstuds[x][y+5] == "":
  						break
  					#print diction_progs[listofstuds[x][y+5]]
 #if seats are vacant or last person alloted has same cpi then allot				
- 					if vacant(listofstuds[x][y+5])  or diction_progs[listofstuds[x][y+5]][5] == listofstuds[x][3]:
+ 					if sufficient(listofstuds[x],y+5):
+ 						if vacant(listofstuds[x][y+5])  or diction_progs[listofstuds[x][y+5]][5] == listofstuds[x][3]:
 #if the seat is not blocked
- 						if diction_progs[listofstuds[x][y+5]][6] < listofstuds[x][3]:
- 							allot(listofstuds[x],listofstuds[x][y+5],final,diction_progs)
- 							if diction_progs[listofstuds[x][y+5]][6] == listofstuds[x][3]:
- 								diction_progs[listofstuds[x][y+5]][6] = 0
-							break;						
-
-
+ 							if diction_progs[listofstuds[x][y+5]][6] < listofstuds[x][3]:
+ 								allot(listofstuds[x],listofstuds[x][y+5],final,diction_progs)
+ 								if diction_progs[listofstuds[x][y+5]][6] == listofstuds[x][3]:
+ 									diction_progs[listofstuds[x][y+5]][6] = 0
+								break;						
+ 	
 	for x in range(0, len(final)):
 		print final[x]
-		print ""
+		print x
 	print len(final)
-	#print list(diction_progs.values())				
+	#print list(diction_progs.values())
+
+
+	#0.75 check with current branch not original (in next iterations)
+	#dictionary of students
+	
