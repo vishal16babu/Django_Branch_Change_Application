@@ -37,13 +37,14 @@ else :
 				return True
 			else:
 				return False
+
+	
+
 #filtering the list			
 	listofstuds = filter(eligible, listofstuds);
 #sorting the list based on merit
 	listofstuds = list(reversed(sorted(listofstuds, key=itemgetter(3))));
-	# for x in range(0, len(listofstuds)):
-	# 	print listofstuds[x]
-	# print len(listofstuds)
+	
 
 
 #dictionary of programs for easy access using tuple of name and cpi as key 
@@ -135,43 +136,67 @@ else :
 				if len(tt[6][0])==0:
 					tt[6]=(0.0,[])	
 #removing the lesser preffered coices
-		p=p[0:y2]
+		#print 'emayya'
+		del p[y2:]
+
+
+
 	changes=1
-	for x in range(0, len(listofstuds)):
+	f_prev=0
+	# for x in range(0, len(listofstuds)):
+	#  	print listofstuds[x]
+	#  	print x
+	
+	while changes!=0 and f_prev!=len(listofstuds):
+		print changes
+		changes=0
+					
+		for x in range(0, len(listofstuds)):
+			if listofstuds[x][0]=='':
+				continue
+				print 'x '+ str(x)
+			
 #case1 if cpi>9
-		if float(listofstuds[x][3]) >= 9.0:
-			for y in range(0, len(listofstuds[x])-5):
-				if listofstuds[x][y+5] == "":
-					break
+			if float(listofstuds[x][3]) >= 9.0:
+				for y in range(0, len(listofstuds[x])-5):
+					if listofstuds[x][y+5] == "":
+						listofstuds[x][0]=''
+						break
+					print 'y '+ str(y)
 				#print diction_progs[listofstuds[x][y+5]]
 #if seats are vacant or last person alloted has same cpi then allot				
-				if vacant(listofstuds[x][y+5]) or diction_progs[listofstuds[x][y+5]][5] == listofstuds[x][3]:
-					allot(listofstuds[x],y+5,final,diction_progs)
-					#if y == 0:
-					
-					break;						
+					if vacant(listofstuds[x][y+5]) or diction_progs[listofstuds[x][y+5]][5] == listofstuds[x][3]:
+						allot(listofstuds[x],y+5,final,diction_progs)
+						changes=changes+1
+						if y == 0:
+							listofstuds[x][0]=''
+							f_prev=f_prev+1
+						break;						
 
- 		else:
- 				#print listofstuds[x][3]
- 				for y in range(0, len(listofstuds[x])-5):
- 					if listofstuds[x][y+5] == "":
- 						break
- 					#print diction_progs[listofstuds[x][y+5]]
+ 			else:
+ 					#print listofstuds[x][3]
+ 					for y in range(0, len(listofstuds[x])-5):
+ 						if listofstuds[x][y+5] == "":
+ 							listofstuds[x][0]=''
+ 							break
+ 						#print diction_progs[listofstuds[x][y+5]]
 #if seats are vacant or last person alloted has same cpi then allot				
- 					if sufficient(listofstuds[x],y+5):
- 						if vacant(listofstuds[x][y+5])  or diction_progs[listofstuds[x][y+5]][5] == listofstuds[x][3]:
+ 						if sufficient(listofstuds[x],y+5):
+ 							if vacant(listofstuds[x][y+5])  or diction_progs[listofstuds[x][y+5]][5] == listofstuds[x][3]:
 #if the seat is not blocked
- 							if diction_progs[listofstuds[x][y+5]][6] < listofstuds[x][3]:
- 								allot(listofstuds[x],y+5,final,diction_progs)
- 								if diction_progs[listofstuds[x][y+5]][6] == listofstuds[x][3]:
- 									diction_progs[listofstuds[x][y+5]][6] = 0
-								break;						
+ 								if diction_progs[listofstuds[x][y+5]][6] < listofstuds[x][3]:
+ 									allot(listofstuds[x],y+5,final,diction_progs)
+ 									changes=changes+1
+									if y == 0:
+										listofstuds[x][0]=''
+										f_prev=f_prev+1
+									break;						
  	
 
-
-	# for x in range(0, len(final)):
-	# 	print final[x]
-	# 	print x
+	for x in range(0, len(listofstuds)):
+		print listofstuds[x]
+		print x
+	print len(listofstuds)
 	# print len(final)
 	#print list(diction_progs.values())
 
