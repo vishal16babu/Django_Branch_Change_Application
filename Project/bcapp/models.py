@@ -24,9 +24,9 @@ class Person(models.Model):
     def __str__(self):
         return str(self.roll_number)
 
-class Preferences(models.Model):
+class Preference(models.Model):
     student = models.ForeignKey(Person)
-    preference = models.CharField(max_length=9,choices=BRANCH_CHOICES,default=str(1))
+    branch = models.CharField(max_length=9,choices=BRANCH_CHOICES,default=str(1))
     
     #created_date = models.DateTimeField(default=timezone.now)
     #published_date = models.DateTimeField(blank=True, null=True)
@@ -35,6 +35,6 @@ class Preferences(models.Model):
         #self.published_date = timezone.now()
         #self.save()
     def __str__(self):              # __unicode__ on Python 2
-        return listofprogs[int(self.preference)][0]
+        return listofprogs[int(self.branch)][0]
 
     
