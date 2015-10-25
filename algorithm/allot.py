@@ -51,6 +51,12 @@ else :
 	for x in range(0, len(listofprogs)):
 		diction_progs[listofprogs[x][0]] = listofprogs[x]
 
+#dictionary of allotments for easy access
+	diction_allot = {}
+	for x in range(0, len(listofstuds)):
+		diction_allot[listofstuds[x][0]] = listofstuds[x]
+	print diction_allot['15xxxxxx7']
+
 #	print diction_progs
 
 #alpha and beta added
