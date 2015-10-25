@@ -20,7 +20,7 @@ else :
 	listofstuds = []
 	filename = sys.argv[2]
 	spamReader = csv.reader(open(filename))
-	yow = []
+	final = []
 	for row in spamReader:
 		#print row
 		#print "	"			
@@ -41,9 +41,9 @@ else :
 	listofstuds = filter(eligible, listofstuds);
 #sorting the list based on merit
 	listofstuds = list(reversed(sorted(listofstuds, key=itemgetter(3))));
-	for x in range(0, len(listofstuds)):
-		print listofstuds[x]
-	print len(listofstuds)
+	# for x in range(0, len(listofstuds)):
+	# 	print listofstuds[x]
+	# print len(listofstuds)
 
 
 #dictionary of programs for easy access
@@ -51,7 +51,7 @@ else :
 	for x in range(0, len(listofprogs)):
 		diction_progs[listofprogs[x][0]] = listofprogs[x]
 
-	print diction_progs['CS B.Tech']
+	print diction_progs
 
 #alpha and beta added
 
@@ -62,6 +62,77 @@ else :
 		b = float(listofprogs[x][2])*beta
 		listofprogs[x].append(int(a))
 		listofprogs[x].append(int(b))
-		print listofprogs[x]
+		listofprogs[x].append(0) #cpi of last alloted person
+		listofprogs[x].append(0) #highest cpi of  blocked persons
+		#print listofprogs[x]
+#listofprogs[x][0] prog name
+#listofprogs[x][1] sanchaned strength
+#listofprogs[x][2] curr_strength
+#listofprogs[x][3] min lim
+#listofprogs[x][4] max lim
+#listofprogs[x][5] #cpi of last alloted person
+#listofprogs[x][6] #highest cpi of  blocked persons
 
 
+
+#iterating based on the merit order
+	def vacant(br):
+		curr = diction_progs[br]
+		if float(curr[2])<curr[4]:
+			return True
+		else:
+			return False
+
+	def sufficient(pq):
+		curr1 = diction_progs[pq[2]]
+		if float(curr1[2])-1.0>curr1[3]:
+			return True
+		else:
+			curr1[6]=max(curr1[6],pq[3])
+			return False
+
+
+	def allot(p,b,f,d):
+		f.append([p[0],p[1],p[2],b])
+#updating the current strenght of the branch		
+		d[b][2]=str(int(d[b][2])+1)
+#updating the current strenght of the prev branch		
+		d[p[2]][2]=str(int(d[p[2]][2])-1)
+# updating cpi of last alloted person			
+		d[b][5] = p[3]
+
+	for x in range(0, len(listofstuds)):
+#case1 if cpi>9
+		if float(listofstuds[x][3]) >= 9.0:
+			#print listofstuds[x][3]
+			for y in range(0, len(listofstuds[x])-5):
+				if listofstuds[x][y+5] == "":
+					break
+				#print diction_progs[listofstuds[x][y+5]]
+#if seats are vacant or last person alloted has same cpi then allot				
+				if vacant(listofstuds[x][y+5]) or diction_progs[listofstuds[x][y+5]][5] == listofstuds[x][3]:
+					allot(listofstuds[x],listofstuds[x][y+5],final,diction_progs)
+					break;						
+
+ 		else:
+ 			if sufficient(listofstuds[x]):
+ 				#print listofstuds[x][3]
+ 				for y in range(0, len(listofstuds[x])-5):
+ 					if listofstuds[x][y+5] == "":
+ 						break
+ 					#print diction_progs[listofstuds[x][y+5]]
+#if seats are vacant or last person alloted has same cpi then allot				
+ 					if vacant(listofstuds[x][y+5])  or diction_progs[listofstuds[x][y+5]][5] == listofstuds[x][3]:
+#if the seat is not blocked
+ 						if diction_progs[listofstuds[x][y+5]][6] < listofstuds[x][3]:
+ 							allot(listofstuds[x],listofstuds[x][y+5],final,diction_progs)
+ 							if diction_progs[listofstuds[x][y+5]][6] == listofstuds[x][3]:
+ 								diction_progs[listofstuds[x][y+5]][6] = 0
+							break;						
+
+
+	for x in range(0, len(final)):
+		print final[x]
+		print ""
+	print len(final)
+	#print list(diction_progs.values())				
