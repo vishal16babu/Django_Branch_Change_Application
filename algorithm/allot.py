@@ -1,5 +1,5 @@
 #!/usr/bin/python
-
+from copy import deepcopy
 import sys
 import csv
 from operator import itemgetter
@@ -17,6 +17,7 @@ else :
 		listofprogs.append(row)	
 	#print listofprogs
 	#input of students choices and checking their eligibility
+	listofprogscopy = listofprogs[:]
 	listofstuds = []
 	filename = sys.argv[2]
 	spamReader = csv.reader(open(filename))
@@ -25,7 +26,11 @@ else :
 		#print row
 		#print "	"			
 		listofstuds.append(row)	
-	#print listofprogs
+	listofstudscopy = deepcopy(listofstuds)
+	listofstudscopy = list(reversed(sorted(listofstudscopy, key=itemgetter(3))))
+	listofstuds = list(reversed(sorted(listofstuds, key=itemgetter(3))));
+	#print listofstudscopy
+	
 	def eligible(person):
 		if person[4] == 'GE':
 			if float(person[3]) >= 8.00 :
@@ -38,12 +43,18 @@ else :
 			else:
 				return False
 
-	
-
+	for x in range(0, len(listofstudscopy)):
+		
+		
+		if not eligible(listofstudscopy[x]) :
+			listofstudscopy[x][3] = 'Ineligible'
+			listofstuds[x][5] = 'Ineligible'
+		listofstudscopy[x]=listofstudscopy[x][:4]
+		#print listofstudscopy[x]		
 #filtering the list			
-	listofstuds = filter(eligible, listofstuds);
+	#listofstuds = filter(eligible, listofstuds);
 #sorting the list based on merit
-	listofstuds = list(reversed(sorted(listofstuds, key=itemgetter(3))));
+	
 	
 
 
@@ -152,8 +163,8 @@ else :
 		changes=0
 					
 		for x in range(0, len(listofstuds)):
-			# if listofstuds[x][0]=='':
-			# 	continue
+			if len(listofstuds[x])>5 and listofstuds[x][5]=='Ineligible':
+				continue
 			# 	print 'x '+ str(x)
 			
 #case1 if cpi>9
@@ -190,12 +201,29 @@ else :
 									#if y == 0:
 										#listofstuds[x][0]=''
 										#f_prev=f_prev+1
-									break;						
+									break;														
  	
-
-	for x in range(0, len(listofstuds)):
+ 	for x in range(0, len(listofstudscopy)):
+		#print listofstudscopy[x]
+		#print listofstuds[x]
+		if listofstudscopy[x][3] =='Ineligible':
+			continue
+		if listofstudscopy[x][2] == listofstuds[x][2]:
+			listofstudscopy[x][3] = 'Branch Unchanged'
+		else:
+			listofstudscopy[x][3] = listofstuds[x][2]
+		listofstudscopy[x]=listofstudscopy[x][:4]
+		#print listofstudscopy[x]
+	listofstudscopy = list(sorted(listofstudscopy, key=itemgetter(0)))
+	listofstuds = list(sorted(listofstuds, key=itemgetter(0)))
+	
+	for x in range(0, len(listofstudscopy)):
 		print listofstuds[x]
-		print x
+		print listofstudscopy[x]
+	
+	#for x in range(0, len(listofstuds)):
+		#print listofstuds[x]
+		#print x
 	#print len(listofstuds)
 	# print len(final)
 	#print list(diction_progs.values())
