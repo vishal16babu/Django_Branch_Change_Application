@@ -21,7 +21,7 @@
 
     <div class="logmod">
 
-<!-- uncomment to see lists -->
+<!-- uncomment to see lists 
 
         {% for joke in students %}
             <a href = "{% url "post_detail" pk=joke.pk %}"> {{ joke }} </a>
@@ -36,9 +36,9 @@
             <br>
             <br>
             <br>
-        {% endfor %} 
+        {% endfor %} -->
         {% block content %}
-        {% endblock %}
+        {% endblock %} 
  
 </div>
     <script src='{% static "js/jquery.min.js" %}'></script>
