@@ -3,5 +3,7 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.post_list, name='post_list'),
-    url(r'^joke/(?P<pk>[0-9]+)/$',views.post_detail, name='post_detail')
+    url(r'^joke/(?P<pk>[0-9]+)/$',views.post_detail, name='post_detail'),
+    url(r'^post/new/(?P<num>[0-9]+)/$', views.post_new, name='post_new'),
+
 ]

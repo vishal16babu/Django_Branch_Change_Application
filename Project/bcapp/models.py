@@ -20,7 +20,7 @@ class Student(models.Model):
     present_branch = models.CharField(max_length=9,choices=BRANCH_CHOICES,default=str(1))
     CPI		       = models.DecimalField(max_digits=3,decimal_places=2)
     category       = models.CharField(max_length=9,choices=CAT_CHOICES,default=str(1))
-
+    Num_of_pref    = models.IntegerField(default=1)
     def __str__(self):
         return str(self.roll_number)
 
