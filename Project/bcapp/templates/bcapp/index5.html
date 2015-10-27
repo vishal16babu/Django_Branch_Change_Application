@@ -1,0 +1,57 @@
+{% extends "bcapp/index.html" %}
+{% block content %}
+<!-- uncomment to see lists -->
+
+<form method="POST" >{% csrf_token %}
+     <p><center> </center> </p>
+<p><center> </center> </p>
+<br>
+<br>
+<br>
+        <h1><center> Please sign up to continue</center> </h1>
+ <div class="logmod__wrapper">
+ 
+    <div class="logmod__container">
+      <ul class="logmod__tabs">
+        <li data-tabtar="lgm-1"><a href="#">Sign Up</a></li>
+      </ul> 
+      <div class="logmod__tab-wrapper">
+      <div class="logmod__tab lgm-1">
+        <div class="logmod__heading">
+          <span class="logmod__heading-subtitle">Enter your login credentials <strong>to create an account</strong></span>
+        </div>
+        <div class="logmod__form">
+          <form accept-charset="utf-8" action="#" class="simform">
+            <div class="sminputs">
+              <div class="input full">
+                <label class="string optional" for="user-name">Username * </label>
+                                {{ form.username }}
+
+              </div>
+            </div>
+            <div class="sminputs">
+              <div class="input string optional">
+                <label class="string optional" for="user-pw">Password *</label>
+                {{ form.password }}
+              </div>
+              
+            </div>
+            <div class="simform__actions">
+              <center>
+        <button type="submit" class="submit">Save</button>
+
+              </center>
+            </div> 
+          </form>
+        </div> 
+       
+
+      </div>
+
+      </div>
+    </div>
+  </div> 
+
+
+ </form>
+  {% endblock content %}

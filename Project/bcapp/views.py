@@ -1,5 +1,5 @@
 from django.shortcuts import render , get_object_or_404
-from .models import Student , User
+from .models import Student , User , branchname , catname
 from .models import Preference
 from .forms import StudentForm , PreferenceForm , UserForm
 from django.forms.formsets import formset_factory
@@ -36,7 +36,7 @@ def account_created(request):
 def details(request, pk):
 
 	if request.method == "POST":
-		form = UserForm(request.POST)
+		form = StudentForm(request.POST)
 		if form.is_valid() :
 			user = form.save(commit=False)
 			user.login = User.objects.get(pk=pk)
@@ -45,7 +45,7 @@ def details(request, pk):
 	else:
 		form = StudentForm()
 		
-	return render(request, 'bcapp/index3.html', {'form': form})	
+	return render(request, 'bcapp/index6.html', {'form': form})	
 
 
 
@@ -57,7 +57,7 @@ def login(request):
 			q_set = Student.objects.filter(login__username=user.username )
 			for stud in q_set :
 				if stud.login.password == user.password :
-					return redirect('bcapp.views.preference', pk=stud.pk)
+					return redirect('preference', pk=stud.pk)
 					break
 			return redirect('bcapp.views.login')
 
@@ -65,7 +65,7 @@ def login(request):
 	else:
 		form = UserForm()
 		
-	return render(request, 'bcapp/index3.html', {'form': form})
+	return render(request, 'bcapp/index1.html', {'form': form})
 
 
 def create_account(request):
@@ -74,11 +74,12 @@ def create_account(request):
 		if form.is_valid() :
 			user = form.save(commit=False)
 			u = User(username=user.username , password = user.password)
-			return redirect( 'bcapp.views.details' , pk=u.pk )
+			u.save()
+			return redirect( 'details' , pk=u.pk )
 	else:
 		form = UserForm()
 		
-	return render(request, 'bcapp/index3.html', {'form': form})
+	return render(request, 'bcapp/index5.html', {'form': form})
 
 
 
@@ -88,7 +89,10 @@ def create_account(request):
 
 def preference(request , pk):
 	student = Student.objects.get(pk=pk)
-	return render(request, 'bcapp/index2.html', {'student': student})	
+	branch = branchname(student.present_branch)
+	cat = catname(student.category)
+	prefers = Preference.objects.filter(student=student)
+	return render(request, 'bcapp/index7.html', {'student': student , 'branch': branch , 'cat': cat , 'prefers': prefers})	
 
 
 

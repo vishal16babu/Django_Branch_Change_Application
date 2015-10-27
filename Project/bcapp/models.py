@@ -35,10 +35,13 @@ class Student(models.Model):
 
 
 
-
 class Preference(models.Model):
     student = models.ForeignKey(Student)
     branch = models.CharField(max_length=9,choices=BRANCH_CHOICES,default=str(1))
     def __str__(self):              # __unicode__ on Python 2
         return listofprogs[int(self.branch)-1][0]
 
+def branchname(strin):
+    return listofprogs[int(strin)-1][0]
+def catname(strin):
+    return CAT_CHOICES[int(strin)-1][1]

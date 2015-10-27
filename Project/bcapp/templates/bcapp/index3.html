@@ -1,15 +1,16 @@
 {% extends "bcapp/index.html" %}
 {% block content %}
-<h1>New post</h1>
+
     <form method="POST" >{% csrf_token %}
         {{ form.as_p }}
+
         <button type="submit" class="save btn btn-default">Save</button>
     </form>
 <!-- uncomment to see lists 
 
 <h1>New post</h1>
     <form method="POST" >{% csrf_token %}
-        {{ form2.as_p }}
+        {{ form2.as_p }}	
         <button type="submit" class="save btn btn-default">Save</button>
     </form>
 
