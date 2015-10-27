@@ -26,3 +26,5 @@ class IndexForm(forms.ModelForm):
 	class Meta:
 		model= Indexes
 		fields = ('index',)	
+
+

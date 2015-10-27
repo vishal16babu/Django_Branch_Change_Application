@@ -6,7 +6,10 @@ from django.forms.formsets import formset_factory
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
-
+from django.shortcuts import render_to_response
+from django.template import RequestContext
+from django.core.urlresolvers import reverse
+from .models import Document
 
 
 def post_list(request):

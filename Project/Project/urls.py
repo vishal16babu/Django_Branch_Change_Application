@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import patterns , include, url
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 admin.autodiscover()
 
 urlpatterns = [
@@ -22,4 +24,6 @@ urlpatterns = [
     url(r'^accounts/login/$', 'django.contrib.auth.views.login'),
     url(r'^accounts/logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}),
     url(r'', include('bcapp.urls')),
+
+    
 ]
