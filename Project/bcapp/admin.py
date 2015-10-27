@@ -42,6 +42,18 @@ def import_csv(modeladmin, request, queryset):
 					print str(branch_num(row[x]))
 					r.save()
     return 
+
+
+def import_final_csv(modeladmin, request, queryset):
+    for fn in queryset:
+		spamReader = csv.reader(open("./output/allotment.csv"))
+		for row in spamReader:
+			fn.roll_number = row[0]
+			fn.name = row[1]
+			fn.present_branch = row[3]
+
+		
+    return 
 import_csv.short_description = u"Import Data from CSV"
 
 class PreferenceInline(admin.StackedInline):

@@ -45,7 +45,6 @@ class Student(models.Model):
         return self.roll_number
 
 
-
 class Preference(models.Model):
     student = models.ForeignKey(Student)
     branch = models.CharField(max_length=9,choices=BRANCH_CHOICES,default=str(1))
