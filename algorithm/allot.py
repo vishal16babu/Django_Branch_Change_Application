@@ -159,8 +159,7 @@ else :
 	with open('allotment.csv', 'wb') as f:
 		writer = csv.writer(f)	
 		final = list(sorted(final, key=itemgetter(0)));
-		for x in range(0, len(final)):
-			print final[x]		
+		for x in range(0, len(final)):	
 			writer.writerow(final[x])
 	
 	with open('output_stats.csv', 'wb') as f:
@@ -173,4 +172,3 @@ else :
 				t = cpi[last_allot[curr]]
 			out = [curr,t,sanc_str[curr],init_str[curr],curr_str[curr]]
 			writer.writerow(out)
-			print out
