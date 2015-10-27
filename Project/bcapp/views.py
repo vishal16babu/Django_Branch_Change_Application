@@ -1,10 +1,11 @@
 from django.shortcuts import render , get_object_or_404
 from .models import Student , User , branchname , catname
 from .models import Preference
-from .forms import StudentForm , PreferenceForm , UserForm
+from .forms import StudentForm , PreferenceForm , UserForm , IndexForm
 from django.forms.formsets import formset_factory
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -29,10 +30,11 @@ def post_new(request, pk):
 		form = StudentForm(instance=student)
 		form2 = PreferenceForm()
 	return render(request, 'bcapp/index3.html', {'form': form})
-
+@login_required
 def account_created(request):
 	return render(request, 'bcapp/index4.html',{})
-
+	
+@login_required
 def details(request, pk):
 
 	if request.method == "POST":
@@ -48,7 +50,7 @@ def details(request, pk):
 	return render(request, 'bcapp/index6.html', {'form': form})	
 
 
-
+@login_required
 def login(request):
 	if request.method == "POST":
 		form = UserForm(request.POST)
@@ -67,7 +69,7 @@ def login(request):
 		
 	return render(request, 'bcapp/index1.html', {'form': form})
 
-
+@login_required
 def create_account(request):
 	if request.method == "POST":
 		form = UserForm(request.POST)
@@ -86,13 +88,32 @@ def create_account(request):
 
 
 
-
+@login_required
 def preference(request , pk):
 	student = Student.objects.get(pk=pk)
 	branch = branchname(student.present_branch)
 	cat = catname(student.category)
 	prefers = Preference.objects.filter(student=student)
-	return render(request, 'bcapp/index7.html', {'student': student , 'branch': branch , 'cat': cat , 'prefers': prefers})	
+	if request.method == "POST":
+		form = PreferenceForm(request.POST)
+		if form.is_valid() :
+			brranch = form.save(commit=False)
+			b = Preference(student=student , branch = int(brranch.branch)) 
+			b.save()
+			return redirect( 'preference' , pk=pk )
+		else:
+			form2 = IndexForm(request.POST)
+			if form2.is_valid() :
+				ind = form2.save(commit=False)
+				if int(ind.index)  <= len(prefers) :
+					b = prefers[int(ind.index)-1] 
+					b.delete()
+				return redirect( 'preference' , pk=pk )
+	else:		
+
+		form = PreferenceForm()
+		form2 = IndexForm()
+	return render(request, 'bcapp/index7.html', {'student': student , 'branch': branch , 'cat': cat , 'prefers': prefers , 'form' : form , 'form2': form2 })	
 
 
 

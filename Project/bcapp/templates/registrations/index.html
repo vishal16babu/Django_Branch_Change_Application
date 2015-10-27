@@ -54,3 +54,35 @@
 
 
 
+
+<script >
+
+function create(){
+var roll = $("#user-email").val()
+  var str1 = $("#user-pw").val();
+  var str2 = $("#user-pw-repeat").val();
+  
+  if(!(str1 == str2)){
+alert("password do not match");
+  }
+  else{
+
+    if(!(roll.length == 9) || !(roll.charAt(0) == '1') || !(roll.charAt(1) == '5')){
+      alert("invalid roll number");
+    }
+    else{
+
+      
+    }
+  }
+
+/*
+for (i=0; i<9;i++ ) {
+
+   num=boxes[i].getElementsByTagName('input');
+for (j=0; j<9;j++ ) {
+x[i][j]=parseInt(num[j].value);
+}  
+}*/
+}
+</script>

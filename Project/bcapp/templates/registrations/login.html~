@@ -1,7 +1,9 @@
 {% extends "bcapp/index.html" %}
 {% block content %}
 <!-- uncomment to see lists -->
-
+{% if form.errors %}
+<p>Your username and password didn't match. Please try again.</p>
+{% endif %}
 <form method="POST" >{% csrf_token %}
       
        
@@ -10,10 +12,7 @@
 <br>
 <br>
 <br>
-        <h1><center>  Welcome to the Branch Change Portal</center> </h1>
-        <br>
-                <h1><center>  Please log in to continue</center> </h1>
-
+        <h1><center> Please log in to continue</center> </h1>
  <div class="logmod__wrapper">
  
     <div class="logmod__container">
@@ -43,9 +42,8 @@
             </div>
             <div class="simform__actions">
               <center>
-        <button id="login" type="submit" class="submit">Log in</button>
-                  <a href = {% url "create_account"  %}><span class="logmod__heading-subtitle">Don't have an account ? <strong> click to sign up</strong></span></a>
-
+<input type="submit" value="login" />
+<input type="hidden" name="next" value="{{ next }}" />
               </center>
             </div> 
           </form>

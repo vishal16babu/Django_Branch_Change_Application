@@ -12,7 +12,7 @@ for row in spamReader:
     listofprogs.append(row) 
 BRANCH_CHOICES = [(str(x+1),listofprogs[x][0]) for x in range(0,len(listofprogs))]
 CAT_CHOICES    = ((str(1), "GE"),(str(2), "OBC"),(str(3),"SC"),(str(4),"ST"),(str(5),"PwD"),)
-
+NUM_CHOICES    = [(str(x+1),str(x+1)) for x in range(0,len(listofprogs))]
 
 
 
@@ -45,3 +45,12 @@ def branchname(strin):
     return listofprogs[int(strin)-1][0]
 def catname(strin):
     return CAT_CHOICES[int(strin)-1][1]
+
+
+class Indexes(models.Model):
+    index = models.CharField(max_length=9,choices=NUM_CHOICES,default=str(1))
+    def __str__(self):
+        return self.index
+
+class Document(models.Model):
+    docfile = models.FileField(upload_to = 'input/')

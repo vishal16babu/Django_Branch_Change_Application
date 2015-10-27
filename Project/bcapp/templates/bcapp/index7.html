@@ -114,7 +114,17 @@ Category : {{ cat }}
     <center><li><h3>{{ branc }}</h3></li></center>
 {% endfor %}
 </ol>
+
+ <br>
+ <br>
+<h2><center>Add more Preferences</center></h2>
+<br>
+<br>
+
+
+
 </div>
+
 <!--
 <div id="sidebar">
 <h3>Menu Navigation</h3>
@@ -200,9 +210,26 @@ Suspendisse potenti. Aliquam hendrerit elit in leo tempor eu molestie orci moles
             <br>
             <br>
         {% endfor %} -->
-        {% block content %}
-        {% endblock %} 
- 
+<form method="POST" >{% csrf_token %}
+<center>{{ form.branch }}</center>
+<br>
+   <center>     <button type="submit" class="submit">Add</button>  </center>
+
+</form>
+
+<br>
+ <br>
+<h2><center>Delete Preference</center></h2>
+<br>
+<br>
+
+<form method="POST" >{% csrf_token %}
+<center>{{ form2.index }}</center>
+<br>
+   <center>     <button type="submit" class="submit">Delete</button>  </center>
+
+</form>
+
 </div>
     <script src='{% static "js/jquery.min.js" %}'></script>
 
@@ -211,7 +238,9 @@ Suspendisse potenti. Aliquam hendrerit elit in leo tempor eu molestie orci moles
 
 
 <div id="footer">
-<p>&copy; Copyright 2010 Eddicted_Ones | Design by <a href="http://www.blogliber.com">Blog Liber</a></p>
+<p><center> <a href={% url "login"  %}>Log out</a></center></p>
+
+<p>&copy; Copyright CS251 Eddicted_Ones | Design by <a href="http://www.cse.iitb.ac.in/~johnpete/">Vishal Babu Bhavani</a></p>
 </div>
 
 </div>

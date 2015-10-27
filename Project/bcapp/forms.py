@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Student , Preference 
+from .models import Student , Preference , Indexes
 from .models import User
 class PreferenceForm(forms.ModelForm):
 
@@ -21,5 +21,8 @@ class UserForm(forms.ModelForm):
 		widgets = {'password': forms.PasswordInput(),}
 
 
+class IndexForm(forms.ModelForm):
 
-		
+	class Meta:
+		model= Indexes
+		fields = ('index',)	
