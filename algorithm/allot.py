@@ -12,6 +12,7 @@ else :
 	max_str = {}
 	curr_str = {}
 	sanc_str = {}
+	init_str = {}
 	last_allot = {}
 	last_left = {}
 	blocks = {}
@@ -21,8 +22,10 @@ else :
 	filename = sys.argv[1]
 	spamReader = csv.reader(open(filename))
 	for row in spamReader:
+		listofprogs.append(row)
 		sanc_str[row[0]] = int(row[1])
 		curr_str[row[0]] = int(row[2])
+		init_str[row[0]] = int(row[2])
 		min_str[row[0]] = int((float(row[1])*alpha)+0.5)
 		max_str[row[0]] = int((float(row[1])*beta)+0.5)
 		last_allot[row[0]] = '0'
@@ -44,17 +47,23 @@ else :
 	def eligible_f(person):
 		return (person[4] == 'GE' and float(person[3]) >= 8.00) or (person[4] == 'SC' and float(person[3]) >= 7.00)
 
-	listofstuds = list(reversed(sorted(listofstuds, key=itemgetter(3))));
-	#print listofstuds
-
 	filename = sys.argv[2]
 	spamReader = csv.reader(open(filename))
 	x = 1 
-	for row in spamReader:
+	for yow in spamReader:
+		listofstuds.append(yow)
+
+
+	listofstuds = list(reversed(sorted(listofstuds, key=itemgetter(3))));
+	#print len(listofstuds)
+
+
+	for x in range(0, len(listofstuds)):
+		row = listofstuds[x]
+	#	print row
 		org_roll[x] = row[0]
 		row[0] = x
-		listofstuds.append(row)
-		x = x+1
+		listofstuds[x][0] = x
 		name[row[0]] = row[1]
 		cpi[row[0]] = row[3]
 		root_br[row[0]] = row[2]
@@ -74,8 +83,7 @@ else :
 		item = [roll,cpi[roll]]
 		if item in blocks[br]:
 			blocks[br].remove(item)
-     	#blocks[br] = list(reversed(sorted(blocks[br], key=itemgetter(1)))
-
+     	
 	def update_blocks(roll,br):
 		item = [roll,cpi[roll]]
 		#print blocks[br]
@@ -96,16 +104,13 @@ else :
 			rem_blocks(roll_no,prefs[roll_no][x])
 		prefs[roll_no] = prefs[roll_no][:pref_no]
 		curr_br[roll_no] = new_br	
-#allot
-#rem_blocks
-#update_blocks
-	#print listofstuds
-	changes = 1
 
+	changes = 1
 	while not changes == 0:
 		changes = 0
 		for x in range(0, len(listofstuds)):
-			curr = x + 1
+			#print len(listofstuds)
+			curr = x
 			if not eligible[curr]:
 				continue
 			for y in range(0, len(prefs[curr])):
@@ -144,14 +149,28 @@ else :
 	
 	final = []
 	for x in range(0, len(listofstuds)):
-		curr = x+1
+		curr = x
 		if not eligible[curr]:
 			curr_br[curr] = 'Ineligible'
 		if curr_br[curr] == root_br[curr]:
 			curr_br[curr] = 'Branch Unchanged'	
 		final.append([org_roll[curr],name[curr],root_br[curr],curr_br[curr]])
 	
-	final = list(sorted(final, key=itemgetter(0)));
-	for x in range(0, len(final)):
-		print final[x]
-		#print x		
+	with open('allotment.csv', 'wb') as f:
+		writer = csv.writer(f)	
+		final = list(sorted(final, key=itemgetter(0)));
+		for x in range(0, len(final)):
+			print final[x]		
+			writer.writerow(final[x])
+	
+	with open('output_stats.csv', 'wb') as f:
+		writer = csv.writer(f)	
+		for x in range(0, len(listofprogs)):
+			curr = listofprogs[x][0]  
+			if last_allot[curr] == '0':
+				t = 'NA'
+			else:
+				t = cpi[last_allot[curr]]
+			out = [curr,t,sanc_str[curr],init_str[curr],curr_str[curr]]
+			writer.writerow(out)
+			print out
