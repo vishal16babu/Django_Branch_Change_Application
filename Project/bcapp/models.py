@@ -8,6 +8,8 @@ import os
 
 listofprogs = []
 br_dic = {}
+initial_dic = {}
+final_dic = {}
 cat_dic = {}
 ind = 1
 filename = "./input/input_programmes.csv"
@@ -15,6 +17,8 @@ spamReader = csv.reader(open(filename))
 for row in spamReader:          
     listofprogs.append(row)
     br_dic[row[0]] = ind
+    initial_dic[row[0]] = int(row[1])
+    final_dic[row[0]] = int(row[2])
     ind = ind+1 
 BRANCH_CHOICES = [(str(x+1),listofprogs[x][0]) for x in range(0,len(listofprogs))]
 CAT_CHOICES    = ((str(1), "GE"),(str(2), "OBC"),(str(3),"SC"),(str(4),"ST"),(str(5),"PwD"),)
@@ -31,7 +35,6 @@ NUM_CHOICES    = [(str(x+1),str(x+1)) for x in range(0,len(listofprogs))]
 class User(models.Model):
     username = models.CharField(max_length=100, default="username")
     password = models.CharField(max_length=50, default="password")
-
 
 
 class Student(models.Model):  
@@ -62,6 +65,12 @@ def branch_num(strn):
 def cat_num(strn):
     return cat_dic[strn]
 
+def branch_initial_count(strn):
+    return initial_dic[strn]
+
+def branch_final_count(strn):
+    return final_dic[strn]
+
 class Indexes(models.Model):
     index = models.CharField(max_length=9,choices=NUM_CHOICES,default=str(1))
     def __str__(self):
@@ -71,3 +80,6 @@ class Document(models.Model):
     docfile = models.FileField(upload_to='input/')
     def filename(self):
         return str(self.docfile)
+
+
+
